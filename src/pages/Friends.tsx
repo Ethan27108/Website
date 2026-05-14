@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 const Friends = () => {
   const [val, setVal] = useState<any[]>([]);  // ideally narrow this down later
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const username = localStorage.getItem("username") || "NoUsername"
   const navigate = useNavigate();
   const handleFriendSend = async (fr: string) => {
+    const query = fr.trim() === "" ? "a" : fr.trim();
     try {
       const response = await fetch("http://localhost:5000/FriendSearch", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ friend: fr, user: username}), // Pass both username and buttonname
+        body: JSON.stringify({ friend: query, user: username}), // Pass both username and buttonname
       });
       if (!response.ok) throw new Error(`Status: ${response.status}`);
         const data = await response.json();
@@ -19,6 +21,11 @@ const Friends = () => {
       alert("Failed to connect to the server.");
     }
   };
+
+  useEffect(() => {
+    handleFriendSend("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClick = async (fr: any) => {
     try {
@@ -52,12 +59,8 @@ const Friends = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                const friendInput = document.getElementById("friendInput") as HTMLInputElement;
-                const friendName = friendInput.value;
-                if (friendName.trim()) {
-                  handleFriendSend(friendName);
-                  friendInput.value = "";
-                }
+                const friendName = searchTerm.trim();
+                handleFriendSend(friendName);
               }}
               className="search-input-container"
             >
@@ -65,6 +68,8 @@ const Friends = () => {
                 type="text" 
                 placeholder="Search for a friend..." 
                 id="friendInput"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
               <button type="submit" className="submitButton" style={{padding: '0.75rem 1.5rem'}}>
                 Search
@@ -87,7 +92,7 @@ const Friends = () => {
                 ))
               ) : (
                 <p style={{color: 'var(--text-secondary)', textAlign: 'center', padding: '2rem'}}>
-                  Search for friends to get started
+                  {searchTerm.trim() ? 'No users matched your search.' : 'No suggested friends are available right now.'}
                 </p>
               )}
             </div>
