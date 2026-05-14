@@ -24,9 +24,10 @@
 
 /* Main Container */
 .main-container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
+  width: 100%;
 }
 
 /* Page Layouts */
@@ -74,13 +75,13 @@
 .home-page {
   min-height: 100vh;
   background: linear-gradient(135deg, var(--gray-50) 0%, #f0f9ff 100%);
-  padding: 2rem 0;
+  padding: 2rem 0 3rem;
 }
 
 .page-header {
   background: white;
-  padding: 2rem;
-  margin: 0 0 3rem 0;
+  padding: 1.5rem;
+  margin: 0 0 2rem 0;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   display: flex;
@@ -108,9 +109,9 @@
 /* Image Gallery */
 .image-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-  gap: 2.5rem;
-  margin-bottom: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .image-card {
@@ -128,12 +129,12 @@
 
 .image-card img {
   width: 100%;
-  height: 320px;
+  height: 240px;
   object-fit: cover;
 }
 
 .image-card-content {
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 .image-card-header {
@@ -150,26 +151,26 @@
 
 .image-card-description {
   color: var(--text-secondary);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   font-size: 0.95rem;
   line-height: 1.6;
 }
 
 .comments-section {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   border-top: 1px solid var(--gray-200);
-  padding-top: 1.5rem;
+  padding-top: 1.25rem;
 }
 
 .comment-input {
   display: flex;
   gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .comment-input input {
   flex: 1;
-  padding: 0.75rem 1rem;
+  padding: 0.7rem 0.95rem;
   border: 2px solid var(--gray-200);
   border-radius: 8px;
   font-size: 0.95rem;
@@ -219,10 +220,11 @@
 /* Messages Page */
 .messages-container {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: minmax(260px, 1fr) minmax(320px, 2fr);
   gap: 2rem;
-  min-height: calc(100vh - 250px);
-  margin: 2rem 0;
+  min-height: auto;
+  margin: 2rem auto;
+  max-width: 1100px;
 }
 
 .friends-list {
@@ -357,6 +359,54 @@
 .search-result-item button {
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+  .main-container {
+    padding: 0 1rem;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button-group {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .image-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .image-card img {
+    height: 220px;
+  }
+
+  .messages-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 0.75rem;
+  }
+
+  .page-header {
+    padding: 1rem;
+  }
+
+  .button-group button,
+  .secondaryButton,
+  .logoutButton {
+    width: 100%;
+  }
+
+  .image-card-content {
+    padding: 1rem;
+  }
 }
 
 /* Settings Page */
